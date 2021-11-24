@@ -40,8 +40,17 @@ class Block{
         fill(255);
         text(this.name, cx + cw / 2, cy + ch / 2);
     }
-    singleClick() {
-
+    singleClickPolar() {
+        let myModal = new bootstrap.Modal(document.getElementById('polar'), {});
+        myModal.show();
+    }
+    singleClickCarrier() {
+        let myModal = new bootstrap.Modal(document.getElementById('carrier'), {});
+        myModal.show();
+    }
+    singleClickOutput() {
+        let myModal = new bootstrap.Modal(document.getElementById('output'), {});
+        myModal.show();
     }
 
     doubleClick() {

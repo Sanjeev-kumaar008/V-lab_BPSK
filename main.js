@@ -158,9 +158,38 @@ export function draw() {
         val.draw();
     });
 }
+function singleClicked(){
+    // myblocks.forEach((val) => {
+    //     val.singleClick();
+    // });
+}
 
 function doubleClicked() {
+    // myblocks.forEach((val) => {
+    //     // let name = val.get('Polar')
+    //     console.log(val.name)
+    //     if(val.name == 'Polar'){
+    //         val.singleClickPolar()
+    //     }else if(val.name == 'Carrier'){
+    //         val.singleClickCarrier()
+    //     }else{
+    //         val.singleClickOutput()
+    //     }
+        
+    // });
+    
+    console.log(myblocks.keys().next().value)
+    if(myblocks.keys().next().value == 'Polar'){
+        myblocks.get('Polar').singleClickPolar()
+        
+    }else if(myblocks.keys().next().value == 'Output'){
+        myblocks.get('Output').singleClickOutput()
+    }else{
+        myblocks.get('Carrier').singleClickCarrier()
+    }
+
 }
+
 
 function mousePressed() {
 }
@@ -169,4 +198,5 @@ window.setup = setup;
 window.draw = draw;
 window.mousePressed = mousePressed;
 window.doubleClicked = doubleClicked;
+window.singleClicked = singleClicked;
 window.windowResized = windowResized;

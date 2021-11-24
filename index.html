@@ -1,29 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BPSK</title>
-    <script src="p5.js"></script>
-    <link rel="stylesheet" href="index.css">
-    <script type = "module" src ="Block.js"></script>
-    <!-- Simulator stuff -->
-    <script type="module" src="main.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BPSK</title>
+  <script src="p5.js"></script>
+  <link rel="stylesheet" href="index.css">
+  <script type="module" src="Block.js"></script>
+  <!-- Simulator stuff -->
+  <script type="module" src="main.js"></script>
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+  <!-- <script src="bootstrap.min.js"></script> -->
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <!-- <script src = "popper.min.js"></script>
+  <script src = "jquery-3.3.1.slim.min.js"></script> -->
+  <!-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script> -->
+<script src="graph.js" type="module"></script>
 </head>
+
 <body>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        Launch demo modal
-      </button>
-      
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Launch demo modal
+  </button>
+
+  <!-- Modal -->
+  
+  <div class="modal fade bd-example-modal-xl" id="myChart" tabindex="-1" role="dialog"
+    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">Graph </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="container-canvas">
+              <canvas id="myChart" width="400px" height="400px"></canvas>
+            </div>
+
+            <br><br><br>
+
+            <div id="container-split">
+              <div id="container-checkbox">
+                <h1 class="subtitle">Display</h1><br>
+                <label class="checkbox-container"><span class="subspan">Show Unsampled wave</span>
+                  <input type="checkbox" name="usw" id="unsampled_wave" checked>
+                  <span class="checkmark"></span>
+                </label><br>
+                <label class="checkbox-container"><span class="subspan">Show Sampled points</span>
+                  <input type="checkbox" name="sp" id="sampled_points" checked>
+                  <span class="checkmark"></span>
+                </label><br>
+                <label class="checkbox-container"><span class="subspan">Show Staircase wave</span>
+                  <input type="checkbox" name="scw" id="staircase_wave" checked>
+                  <span class="checkmark"></span>
+                </label><br>
+              </div>
+              <div class="container-variables">
+                <div class="variables">
+                  <h1 class="subtitle">Variables</h1>
+                  <label for="fname" class="varname">Amplitude(V):</label><br>
+                  <div class="slidecontainer">
+                    <input type="range" min="2" max="20" step="1" value="2" class="slider" id="amplitude">
+                  </div>
+                  <label for="fname" class="varname">Frequency(hz):</label><br>
+                  <div class="slidecontainer">
+                    <input type="range" min="1" max="20" step="1" value="1" class="slider" id="frequency">
+                  </div>
+                  <label for="fname" class="varname">Sampling Frequency(hz):</label><br>
+                  <div class="slidecontainer">
+                    <input type="range" min="20" max="200" step="2" value="20" class="slider" id="sampling_frequency">
+                  </div>
+                  <label for="fname" class="varname">Vertical Scale:</label><br>
+                  <div class="slidecontainer">
+                    <input type="range" min="20" max="200" step="10" value="50" class="slider"
+                      id="vertical_scale_factor">
+                  </div>
+                  <label for="fname" class="varname">Horizontal Scale:</label><br>
+                  <div class="slidecontainer">
+                    <input type="range" min="20" max="200" step="10" value="50" class="slider"
+                      id="horizontal_scale_factor">
+                  </div>
+                </div>
+              </div>
+
+              <div class="container-result">
+                <h1 class="subtitle">Result</h1>
+                <h3>Wave Amplitude(V): <span id="Am"></span></h3>
+                <h3>Wave Frequency(hz): <span id="Fm"></span></h3>
+                <h3>Sampling Frequency(hz): <span id="Fs"></span> </h3>
+                <h3>Delta: <span id="Delta"></span> </h3>
+              </div>
+            </div>
+          </div>
+          <br><br><br><br>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--Modal -->
+  <!-- <div class="modal fade" id="carrier" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Carrier</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -37,12 +127,18 @@
             </div>
           </div>
         </div>
-      </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script>
+      </div> -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <!-- <script>
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
@@ -71,6 +167,7 @@ var myChart = new Chart(ctx, {
         }
     }
 });
-</script>  
+</script> -->
 </body>
+
 </html>
