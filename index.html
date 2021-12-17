@@ -3,49 +3,53 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BPSK</title>
-  <script src="p5.js"></script>
-  <link rel="stylesheet" href="index.css">
-  <script type="module" src="Block.js"></script>
+  <title>Binary Phase Shift Keying</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/graph.css">
+  <link rel="stylesheet" href="./css/scrollbars.css">
+  <link rel="stylesheet" href="./css/checkmark.css">
+  <link rel="stylesheet" href="./css/customslider.css">
+
+  <!-- p5 stuff -->
+  <script src="js/p5.js"></script>
+
   <!-- Simulator stuff -->
-  <script type="module" src="main.js"></script>
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-  <!-- <script src="bootstrap.min.js"></script> -->
-  <link rel="stylesheet" href="bootstrap.min.css">
-  <!-- <script src = "popper.min.js"></script>
-  <script src = "jquery-3.3.1.slim.min.js"></script> -->
-  <!-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-  crossorigin="anonymous"></script> -->
-<script src="graph.js" type="module"></script>
+  <script type="module" src="js/main.js"></script>
 </head>
 
 <body>
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Launch demo modal
+  <h1 class="title main-title" style = "text-align:center">Binary Phase Shift Keying</h1>
+
+  <br>
+
+  <!-- Button to Open the Modal -->
+  <button id="button1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    Set Input
   </button>
+  <button id = "button2" type="button" class="btn btn-primary" data-toggle="modal" data-target="#deModal">
+    graph-model
+  </button>
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content" style = "width:150%">
 
-  <!-- Modal -->
-  
-  <div class="modal fade bd-example-modal-xl" id="myChart" tabindex="-1" role="dialog"
-    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-      <div class="modal-content">
+        <!-- Modal Header -->
         <div class="modal-header">
-          <h2 class="modal-title">Graph </h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-
+          <h4 class="modal-title">QPSK Graph</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
+
+        <!-- Modal body -->
         <div class="modal-body">
           <div class="container">
             <div class="container-canvas">
-              <canvas id="myChart" width="400px" height="400px"></canvas>
+              <canvas id="canvas1"></canvas>
             </div>
 
             <br><br><br>
+
 
             <div id="container-split">
               <div id="container-checkbox">
@@ -62,6 +66,7 @@
                   <input type="checkbox" name="scw" id="staircase_wave" checked>
                   <span class="checkmark"></span>
                 </label><br>
+
               </div>
               <div class="container-variables">
                 <div class="variables">
@@ -85,89 +90,103 @@
                   </div>
                   <label for="fname" class="varname">Horizontal Scale:</label><br>
                   <div class="slidecontainer">
-                    <input type="range" min="20" max="200" step="10" value="50" class="slider"
+                    <input type="range" min="2" max="200" step="10" value="50" class="slider"
                       id="horizontal_scale_factor">
+                  </div>
+                  <div class="container">
+                    <h4>Binary Sequence Bits</h4>
+                    <select id="bit1" onchange="binSeq()">
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                    </select>
+                    <select id="bit2" onchange="binSeq()">
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                    </select>
+                    <select id="bit3" onchange="binSeq()">
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                    </select>
+                    <select id="bit4" onchange="binSeq()">
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                    </select>
+                    <select id="bit5" onchange="binSeq()">
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                    </select>
+                    <select id="bit6" onchange="binSeq()">
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                    </select>
+                    <select id="bit7" onchange="binSeq()">
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                    </select>
+                    <select id="bit8" onchange="binSeq()">
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                    </select>
                   </div>
                 </div>
               </div>
 
               <div class="container-result">
                 <h1 class="subtitle">Result</h1>
-                <h3>Wave Amplitude(V): <span id="Am"></span></h3>
-                <h3>Wave Frequency(hz): <span id="Fm"></span></h3>
-                <h3>Sampling Frequency(hz): <span id="Fs"></span> </h3>
-                <h3>Delta: <span id="Delta"></span> </h3>
+                <h3 class="subtitle">Wave Amplitude(V): <span id="Am"></span></h3>
+                <h3 class="subtitle">Wave Frequency(hz): <span id="Fm"></span></h3>
+                <h3 class="subtitle">Sampling Frequency(hz): <span id="Fs"></span> </h3>
+                <!-- <h3 class="subtitle">Delta: <span id="Delta"></span> </h3> -->
               </div>
             </div>
           </div>
-          <br><br><br><br>
-
         </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="deModal">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content" style = "width:150%">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">BPSK Graph - Demodulated Graph</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="container">
+            <div class="container-canvas">
+              <canvas id="canvas2"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+
       </div>
     </div>
   </div>
 
 
-  <!--Modal -->
-  <!-- <div class="modal fade" id="carrier" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Carrier</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <canvas id="myChart" width="400" height="400"></canvas>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div> -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-  <!-- <script>
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['0', '[π] / 2', 'π', '3 [π/ 2]', '2π', '5π / 2'],
-        datasets: [{
-            label: 'sin FIG' ,
-                         // data corresponding to specific data in the Y-axis position 
-                        data : [0,1,0,-1,0,1],
-                         // the borderColor line color 
-                         borderColor: 'Red' ,
-                         // borderWidth line width 
-                        borderWidth:1 ,
-                         // borderDash: [5, 5] is used to represent a broken line. [5,5] which represent the length and the distance of a broken line. 
-                        borderDash: [5, 5 ],
-                         //   Fill: filling portion without false polyline comprises using the shadow of 
-                        fill: false , 
-            
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
-</script> -->
+  </div>
+  <script type="module" src="./js/graph.js"></script>
+  <script type="module" src="./js/demodg.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
