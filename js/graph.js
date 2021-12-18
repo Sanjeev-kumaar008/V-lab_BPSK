@@ -252,4 +252,7 @@ function draw() {
 }
 
 requestAnimationFrame(draw);
-export {binSeq,vertical_scaling_factor,horizontal_scaling_factor};
+export {binSeq, vertical_scaling_factor,horizontal_scaling_factor};
+for (var i = 1; i <= 8; i++) {
+    document.getElementById("bit" + i.toString()).addEventListener('click', binSeq);
+}
